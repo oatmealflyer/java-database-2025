@@ -232,8 +232,49 @@ Java개발자 과정 Database 리포지토리
            CREATE INDEX 인덱스명 ON 테이블명(인덱스컬럼명)
            ```
     ## 5일차
-    - VIEW
-    - 서브쿼리
-    - 시퀀스  
+    - VIEW :[서브쿼리](./day05/sql01_view.sql)
+        - 기존 테이블에서 권한 별로 보일 수 있는 컬럼을 지정해서 만드는 개체 
+        - 기존 테이블 중 개인정보나 중요한 부분이 있으면 제외하고 보일 수 있음 
+        - 뷰이라도 INSERT, UPDATE , DELETE 가능함 . 단일뷰에서만 
 
+            ```sql 
+            CREATE VIEW 뷰명 
+            AS 
+                SELECT 쿼리 
+            [WITH READ ONLY] 
+            ```
+        - 복합뷰는 두 개 이상의 테이블을 조인해서 만든뷰 . DML 기능 불가  
+
+    - 서브쿼리 :[서브쿼리](./day05/sql02_subquery.sql)
+        - 메인쿼리를 도와주는 하위쿼리 뜻함.소괄호() 내에 포함됨 
+        - 단일행 서브쿼리, 다중행 서브쿼리마다 사용법 다름 
+        - SELECT절 서브쿼리, FROM절 서브쿼리, WHERE절 서브쿼리 
+        - 서브쿼리는 JOIN으로 거의 다 변경 가능 
+    - 시퀀스 :[시퀀스쿼리](./day05/sql03_sequence.sql)
+      - 번호로 지정된 PK 값을 자동으로 삽입할 수 있도록 도와주는 기능 
+      - 없어도 기능에는 차이가 없지만 효율을 위해서 사용
+      - Oracle만 존재 . 타DB보다 자동증가값 사용 불편  
+        ```sql 
+        CREATE SEQUENCE 시퀀스명 
+        INCREMENT BY -- 증가값 
+        START WITH 1 -- 초기 시작값
+        [MAXVALUE 999999] -- 최대증가값 
+        [CYCLE] --최대증가값에 도달하면 다시 처음1로 돌아갈 것인지 
+        [CACHE] --번호증가 캐쉬 (대용량 삽입시만 관계) 
+
+        시퀀스명.nextval 
+        시퀀스명.currval 
+        ```
+    - 사용자 계정 권한 :[쿼리](./day05/sql04_사용자계정관리.sql)
+        -사용자 생성 후 권한(롤)을 부여해야 스키마를 사용가능 
+
+        ```sql
+        -- 권한부여 
+        GRANT 권한|롤 TO 사용자[WITH ADMIN|GRANT OPTION]
+        -- 권한 해제 
+        REVOKE 권한|롤 FROM 사용자;
+        ```
+
+    ## 6일차 
+    - PL/SQL -ORACLE에서 파이썬처럼 코딩
        

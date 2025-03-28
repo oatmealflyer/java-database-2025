@@ -6,27 +6,29 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import QtWidgets, QtGui, uic
 
-# Oracle 모듈 
+# Oracle 데이터베이스를 사용하기 위한 모듈 추가
 import cx_Oracle as oci
 
-# DB연결 설정
-sid = 'XE'
-host = 'localhost'
-port = 1521
-username = 'madang'
-password = 'madang'
-basic_msg = '학생정보 v1.0'
+# Oracle 데이터베이스 연결 정보
+sid = 'XE'  # 서비스 이름
+host = 'localhost'  # 데이터베이스 호스트 주소
+port = 1521  # 포트 번호
+username = 'madang'  # 사용자 이름
+password = 'madang'  # 비밀번호
+basic_msg = '학생정보 v1.0'  # 기본 상태 메시지
 
+# 메인 윈도우 클래스 정의
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.initUI()
-        self.loadData()
+        self.initUI() # UI 초기화 함수 호출
+        self.loadData()  # DB에서 데이터를 불러오는 함수 호출
 
     def initUI(self):
+        # UI 파일 로드
         uic.loadUi('./toyproject/studentdb.ui', self)
-        self.setWindowTitle('학생정보앱')
-        self.setWindowIcon(QIcon('./image/students.png'))
+        self.setWindowTitle('학생정보앱') # 창 제목 설정
+        self.setWindowIcon(QIcon('./image/students.png'))# 창 아이콘 설정
 
         #상태바에 메시지 추가 
         self.statusbar.showMessage(basic_msg)
@@ -36,41 +38,42 @@ class MainWindow(QMainWindow):
         self.btn_mod.setIcon(QIcon('./image/edit-user.png'))
         self.btn_del.setIcon(QIcon('./image/del-user.png'))
 
-
-        # 버튼 시그널 추가
+        # 버튼 클릭 시 실행될 함수 연결 (이벤트 핸들러)
         self.btn_add.clicked.connect(self.btnAddClick)
         self.btn_mod.clicked.connect(self.btnModClick)
         self.btn_del.clicked.connect(self.btnDelClick)
-        #테이블위젯 더블클릭 시그널 
+
+        # 테이블 위젯 더블클릭 시 실행될 함수 연결
         self.tblStudent.doubleClicked.connect(self.tblStudentDoubleClick)
         self.show()
 
-    #화면의 인풋위젯 데이터 초기화 함수 
+    # 입력 필드를 초기화하는 함수
     def clearInput(self):
-        self.input_std_id.clear()
-        self.input_std_name.clear()
-        self.input_std_mobile.clear()
-        self.input_std_regyear.clear()
+        self.input_std_id.clear()  # 학생 번호 입력 필드 초기화
+        self.input_std_name.clear()  # 학생 이름 입력 필드 초기화
+        self.input_std_mobile.clear()  # 전화번호 입력 필드 초기화
+        self.input_std_regyear.clear()  # 입학년도 입력 필드 초기화
 
     #테이블위젯 더블클릭 시그널처리 함수 
     def tblStudentDoubleClick(self):
             # QMessageBox.about(self,'더블클릭','동작합니다!')
-            selected = self.tblStudent.currentRow() #현재 선택된 row의 index 반환함수 
-            std_id = self.tblStudent.item(selected,0).text()
-            std_name = self.tblStudent.item(selected,1).text()
-            std_mobile = self.tblStudent.item(selected,2).text()
-            std_regyear = self.tblStudent.item(selected,3).text()
+            selected = self.tblStudent.currentRow() #현재 선택된 행의 인덱스 가져오기
+            std_id = self.tblStudent.item(selected,0).text() # 학생 번호 가져오기
+            std_name = self.tblStudent.item(selected,1).text()# 학생 이름 가져오기
+            std_mobile = self.tblStudent.item(selected,2).text() # 전화번호 가져오기
+            std_regyear = self.tblStudent.item(selected,3).text() # 입학년도 가져오기
             # QMessageBox.about(self,'더블클릭',f'{std_id},{std_name},{std_mobile},{std_regyear}')
-
+            
+            # 입력 필드에 데이터를 채우기
             self.input_std_id.setText(std_id)
             self.input_std_name.setText(std_name)
             self.input_std_mobile.setText(std_mobile)
             self.input_std_regyear.setText(std_regyear)
 
-            # 상태바에 메시지 추가
+            # 상태바 메시지 수정 모드로 변경
             self.statusbar.showMessage(f'{basic_msg}|수정모드')
 
-    # 추가버튼 클릭 시그널 처리 함수 
+    # 추가 버튼 클릭 시 호출되는 함수 
     def btnAddClick(self):
         # print('추가버튼 클릭')
         std_id = self.input_std_id.text()
@@ -96,6 +99,7 @@ class MainWindow(QMainWindow):
 
             self.loadData() #다시 테이블위젯 데이터를 DB에서 조회. 
             self.clearInput() #인풋값 삭제함수 호출
+    
     # 수정버튼 클릭 시그널 처리 함수 
     def btnModClick(self):     
          # print('수정버튼 클릭')

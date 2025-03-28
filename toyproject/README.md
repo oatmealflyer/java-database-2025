@@ -100,7 +100,10 @@ PYTHON GUI - Oracle 연동 프로그램
         - DB를 변경 
         - PK 제약 조건 ,FK 제약조건,비식별제약조건 선택해서 
         - SQL 미리보기로 확인
-        - SQL 다운로ㅡ
+        - SQL 다운로드
+        <img src=>
     5.DBeaver 
         - 내보내기한 sql 오픈
         - 스크립트 실행 
+        - ER 다이어그램 그리기 
+        <img src="">

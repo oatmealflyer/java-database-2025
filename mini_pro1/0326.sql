@@ -73,13 +73,15 @@ CREATE TABLE teamprod(
     , prod_amount number(20, 0) NULL
 );
 
-SELECT * FROM TEAMPROD ;
+SELECT * FROM delivery;
 
 CREATE TABLE DELIVERY(
 			prod_name varchar2(20) PRIMARY KEY NOT NULL
 	      , prod_order DATE
 	      , prod_delivery DATE
 			);
+INSERT INTO MINIPROJECT.DELIVERY (PROD_NAME,PROD_ORDER,PROD_DELIVERY)
+VALUES(prod_name,prod_orderdate,prod_delidate)
 
 DROP TABLE BRAND ; --기존 브랜드 테이블 삭제 명령어 
 CREATE TABLE BRAND( 
